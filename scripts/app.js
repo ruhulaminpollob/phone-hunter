@@ -2,13 +2,15 @@ const loadPhones = async (searchPhone) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchPhone}`
     const res=await fetch(url);
     const data=await res.json();
-    return displayPhones(data.data.slice(0, 9))
+    return displayPhones(data.data)
 }
 const displayPhones=phones=>{
+    phones=phones.slice(0,20)
     const cardContainer=document.getElementById('card-container');
     cardContainer.innerHTML='';
     // console.log(phones);
     phones.forEach(phone => {
+        
         const div=document.createElement('div');
         div.classList.add='col';
         div.innerHTML=`
