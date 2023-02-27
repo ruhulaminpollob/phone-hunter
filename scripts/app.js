@@ -1,12 +1,12 @@
-const loadPhones = async (searchPhone,dataLimit) => {
+const loadPhones = async (searchPhone, dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchPhone}`
     const res = await fetch(url);
     const data = await res.json();
 
-    return displayPhones(data.data,dataLimit)
+    return displayPhones(data.data, dataLimit)
 }
-const displayPhones = (phones,dataLimit) => {
-    
+const displayPhones = (phones, dataLimit) => {
+
     const showAll = document.getElementById('show-all')
     if (dataLimit && phones.length > 10) {
         phones = phones.slice(0, 10);
@@ -34,7 +34,7 @@ const displayPhones = (phones,dataLimit) => {
         <div class="card-body">
             <h5 class="card-title">${phone.phone_name}</h5>
             <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <button href="#" onclick="showDetails('${phone.slug}')" class="btn btn-primary">See Details</button>
+            <button href="#" onclick="showDetails('${phone.slug}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsModal">See Details</button>
         </div>
         </div>
         `
@@ -44,18 +44,18 @@ const displayPhones = (phones,dataLimit) => {
     spinnerLoad(false)
 }
 
-const prosesAllData=dataLimit=>{
+const prosesAllData = dataLimit => {
     spinnerLoad(true)
 
     const inputFiled = document.getElementById('input-filed');
     const inputText = inputFiled.value;
-    loadPhones(inputText,dataLimit)
+    loadPhones(inputText, dataLimit)
 }
 document.getElementById('search-btn').addEventListener('click', function () {
     prosesAllData(10)
 
 });
-document.getElementById("input-filed").addEventListener('keydown', function(e) {
+document.getElementById("input-filed").addEventListener('keydown', function (e) {
     if (e.key === "Enter") {
         prosesAllData(10)
     }
@@ -78,11 +78,36 @@ document.getElementById('show-all-btn').addEventListener('click', function () {
 
 
 // show details
-const showDetails=async id=>{
-    const url=`https://openapi.programming-hero.com/api/phone/${id}`
-    const res=await fetch(url);
-    const data =await res.json();
-    console.log(data);
+const showDetails = async id => {
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`
+    const res = await fetch(url);
+    const data = await res.json();
+    showDetailsModal(data);
+}
+const showDetailsModal = phone => {
+    const {chipSet, displaySize, memory}=phone.data.mainFeatures;
+    const modalContainer=document.getElementById('modal-container');
+    modalContainer.innerHTML=`
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="detailsModalLabel">${phone.data.name}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Chip Set: ${chipSet}</p>
+                            <p>Display Size: ${displaySize}</p>
+                            <p>Memory: ${memory}</p>                                                      
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+    `
 }
 
-// loadPhones()
+// loadPhones('samsung')
