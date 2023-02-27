@@ -54,7 +54,12 @@ const prosesAllData=dataLimit=>{
 document.getElementById('search-btn').addEventListener('click', function () {
     prosesAllData(10)
 
-})
+});
+document.getElementById("input-filed").addEventListener('keydown', function(e) {
+    if (e.key === "Enter") {
+        prosesAllData(10)
+    }
+});
 
 const spinnerLoad = isSpin => {
     const spinner = document.getElementById('spinner')
