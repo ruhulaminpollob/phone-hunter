@@ -1,24 +1,27 @@
 const loadPhones = async (searchPhone) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchPhone}`
-    const res=await fetch(url);
-    const data=await res.json();
+    const res = await fetch(url);
+    const data = await res.json();
+    
     return displayPhones(data.data)
 }
-const displayPhones=phones=>{
-    phones=phones.slice(0,20)
-    const cardContainer=document.getElementById('card-container');
-    cardContainer.innerHTML='';
-    const noPhoneFound=document.getElementById('no-phone-msg');
-console.log(noPhoneFound);
-    if (phones.length===0) {
+const displayPhones = phones => {
+    phones = phones.slice(0, 20)
+    const cardContainer = document.getElementById('card-container');
+    cardContainer.innerHTML = '';
+    const noPhoneFound = document.getElementById('no-phone-msg');
+    
+    if (phones.length === 0) {
         noPhoneFound.classList.remove('d-none')
+    } else {
+        noPhoneFound.classList.add('d-none')
     }
     // console.log(phones);
     phones.forEach(phone => {
-        
-        const div=document.createElement('div');
-        div.classList.add='col';
-        div.innerHTML=`
+
+        const div = document.createElement('div');
+        div.classList.add = 'col';
+        div.innerHTML = `
         <div class="card p-4">
         <img src="${phone.image}" class="card-img-top " alt="...">
         <div class="card-body">
@@ -29,13 +32,13 @@ console.log(noPhoneFound);
         `
         cardContainer.appendChild(div)
     });
-    document.getElementById('search-btn').addEventListener('click', function () {
-        const inputFiled=document.getElementById('input-filed');
-        const inputText=inputFiled.value;
-        loadPhones(inputText)
-
-    })
+    
 
 }
+document.getElementById('search-btn').addEventListener('click', function () {
+    const inputFiled = document.getElementById('input-filed');
+    const inputText = inputFiled.value;
+    loadPhones(inputText)
 
-loadPhones()
+})
+// loadPhones()
