@@ -8,6 +8,11 @@ const displayPhones=phones=>{
     phones=phones.slice(0,20)
     const cardContainer=document.getElementById('card-container');
     cardContainer.innerHTML='';
+    const noPhoneFound=document.getElementById('no-phone-msg');
+console.log(noPhoneFound);
+    if (phones.length===0) {
+        noPhoneFound.classList.remove('d-none')
+    }
     // console.log(phones);
     phones.forEach(phone => {
         
