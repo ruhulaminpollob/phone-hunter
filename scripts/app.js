@@ -1,14 +1,14 @@
-const loadPhones = async (searchPhone) => {
+const loadPhones = async (searchPhone,dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchPhone}`
     const res = await fetch(url);
     const data = await res.json();
 
-    return displayPhones(data.data)
+    return displayPhones(data.data,dataLimit)
 }
-const displayPhones = phones => {
+const displayPhones = (phones,dataLimit) => {
     
     const showAll = document.getElementById('show-all')
-    if (phones.length > 10) {
+    if (dataLimit && phones.length > 10) {
         phones = phones.slice(0, 10);
 
         showAll.classList.remove('d-none')
@@ -43,12 +43,16 @@ const displayPhones = phones => {
 
     spinnerLoad(false)
 }
-document.getElementById('search-btn').addEventListener('click', function () {
+
+const prosesAllData=dataLimit=>{
     spinnerLoad(true)
 
     const inputFiled = document.getElementById('input-filed');
     const inputText = inputFiled.value;
-    loadPhones(inputText)
+    loadPhones(inputText,dataLimit)
+}
+document.getElementById('search-btn').addEventListener('click', function () {
+    prosesAllData(10)
 
 })
 
@@ -61,4 +65,8 @@ const spinnerLoad = isSpin => {
     }
 
 }
+
+document.getElementById('show-all-btn').addEventListener('click', function () {
+    prosesAllData()
+})
 // loadPhones()
