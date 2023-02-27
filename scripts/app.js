@@ -2,15 +2,23 @@ const loadPhones = async (searchPhone) => {
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchPhone}`
     const res = await fetch(url);
     const data = await res.json();
-    
+
     return displayPhones(data.data)
 }
 const displayPhones = phones => {
-    phones = phones.slice(0, 20)
+    
+    const showAll = document.getElementById('show-all')
+    if (phones.length > 10) {
+        phones = phones.slice(0, 10);
+
+        showAll.classList.remove('d-none')
+    } else {
+        showAll.classList.add('d-none')
+    }
     const cardContainer = document.getElementById('card-container');
     cardContainer.innerHTML = '';
     const noPhoneFound = document.getElementById('no-phone-msg');
-    
+
     if (phones.length === 0) {
         noPhoneFound.classList.remove('d-none')
     } else {
@@ -32,7 +40,7 @@ const displayPhones = phones => {
         `
         cardContainer.appendChild(div)
     });
-    
+
     spinnerLoad(false)
 }
 document.getElementById('search-btn').addEventListener('click', function () {
@@ -44,11 +52,11 @@ document.getElementById('search-btn').addEventListener('click', function () {
 
 })
 
-const spinnerLoad=isSpin=>{
-    const spinner=document.getElementById('spinner')
+const spinnerLoad = isSpin => {
+    const spinner = document.getElementById('spinner')
     if (isSpin) {
         spinner.classList.remove('d-none')
-    }else{
+    } else {
         spinner.classList.add('d-none')
     }
 
