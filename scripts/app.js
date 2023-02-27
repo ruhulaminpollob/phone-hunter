@@ -33,12 +33,24 @@ const displayPhones = phones => {
         cardContainer.appendChild(div)
     });
     
-
+    spinnerLoad(false)
 }
 document.getElementById('search-btn').addEventListener('click', function () {
+    spinnerLoad(true)
+
     const inputFiled = document.getElementById('input-filed');
     const inputText = inputFiled.value;
     loadPhones(inputText)
 
 })
+
+const spinnerLoad=isSpin=>{
+    const spinner=document.getElementById('spinner')
+    if (isSpin) {
+        spinner.classList.remove('d-none')
+    }else{
+        spinner.classList.add('d-none')
+    }
+
+}
 // loadPhones()
