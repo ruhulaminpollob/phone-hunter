@@ -87,9 +87,14 @@ const showDetails = async id => {
 }
 const showDetailsModal = phone => {
     const {chipSet, displaySize, memory}=phone.data.mainFeatures;
+    const modalBody=document.getElementById('modal-body');
+    modalBody.innerHTML=`
+    <p>ChipSet: ${chipSet}</p>
+    <p>DisplaySize: ${displaySize}</p>
+    <p>Memory: ${memory}</p>   
     
-    console.log(phone);
+    `
     
 }
 
-loadPhones('samsung')
+loadPhones('phone')
