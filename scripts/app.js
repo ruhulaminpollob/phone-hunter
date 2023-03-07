@@ -34,7 +34,7 @@ const displayPhones = (phones, dataLimit) => {
         <div class="card-body">
             <h5 class="card-title">${phone.phone_name}</h5>
             <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <button href="#" onclick="showDetails('${phone.slug}')" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailsModal">See Details</button>
+            <button href="#"  class="btn btn-primary">See Details</button>
         </div>
         </div>
         `
@@ -87,23 +87,9 @@ const showDetails = async id => {
 }
 const showDetailsModal = phone => {
     const {chipSet, displaySize, memory}=phone.data.mainFeatures;
-    const modalContainer=document.getElementById('modal-container');
-    modalContainer.innerHTML=`
-    <div class="modal-content">
-        <div class="modal-header">
-            <h1>${phone.data.name}</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <p>Chip Set: ${chipSet?chipSet:'no chip set'}</p>
-            <p>Display Size: ${displaySize?displaySize:'no display'}</p>
-            <p>Memory: ${memory?memory:'no memory'}</p>                                                      
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                            
-        </div>
-    </div>
-    `
+    
+    console.log(phone);
+    
 }
 
-// loadPhones('samsung')
+loadPhones('samsung')
