@@ -82,31 +82,27 @@ const showDetails = async id => {
     const url = `https://openapi.programming-hero.com/api/phone/${id}`
     const res = await fetch(url);
     const data = await res.json();
+    
     showDetailsModal(data);
 }
 const showDetailsModal = phone => {
     const {chipSet, displaySize, memory}=phone.data.mainFeatures;
     const modalContainer=document.getElementById('modal-container');
     modalContainer.innerHTML=`
-    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="detailsModalLabel">${phone.data.name}</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Chip Set: ${chipSet}</p>
-                            <p>Display Size: ${displaySize}</p>
-                            <p>Memory: ${memory}</p>                                                      
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                            
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="detailsModalLabel">${phone.data.name}</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Chip Set: ${chipSet?chipSet:'no chip set'}</p>
+            <p>Display Size: ${displaySize?displaySize:'no display'}</p>
+            <p>Memory: ${memory?memory:'no memory'}</p>                                                      
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>                            
+        </div>
+    </div>
     `
 }
 
